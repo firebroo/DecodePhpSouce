@@ -1,10 +1,12 @@
 #!/bin/python
 
 import re
+import sys
 
 class SDDecode():
 
-    def __init__(self):
+    def __init__(self, name):
+        self.fileName = name
         self.content = ""
         self.replaceVarList1 = []
         self.replaceVarList2 = []
@@ -12,7 +14,7 @@ class SDDecode():
         self.replaceFunList2 = []
 
     def readFile(self):
-        fil = open("space.inc.php")
+        fil = open(self.fileName)
         content = fil.read()
         fil.close()
         self.content = content
@@ -82,10 +84,11 @@ class SDDecode():
         self.replaceFunction()
 
 
-
-
 if __name__ == "__main__":
-    sdDecode = SDDecode()
+    if len(sys.argv) != 2:
+        print("Usage: python djDecode.py xxx.php")
+        exit(-1)
+    sdDecode = SDDecode(sys.argv[1])
     sdDecode.decode()
     print sdDecode.getContent()
     
